@@ -1,0 +1,34 @@
+class Solution {
+    private class Engineer {
+        int speed;
+        int efficiency;
+        Engineer(int speed, int efficiency) {
+            this.speed = speed;
+            this.efficiency = efficiency;
+        }
+    }
+    
+    public int maxPerformance(int n, int[] speed, int[] efficiency, int k) {
+        List<Engineer> engineers = new ArrayList<>();
+        for(int i = 0; i < n; i++) {
+            engineers.add(new Engineer(speed[i], efficiency[i]));
+        }
+	
+        engineers.sort((a, b) -> b.efficiency - a.efficiency);
+        
+        PriorityQueue<Engineer> pq = new PriorityQueue<Engineer>((a, b) -> a.speed - b.speed);
+        long maxPerformance = 0, totalSpeed = 0, performance;
+        
+		for (Engineer engineer: engineers) {
+            if (pq.size() == k) {
+                totalSpeed -= pq.peek().speed;
+                pq.poll();
+            } 
+            totalSpeed += engineer.speed;
+            performance = totalSpeed * (long) engineer.efficiency;
+            pq.add(engineer);
+            maxPerformance = Math.max(maxPerformance, performance);
+        }
+        return (int)(maxPerformance % (1000000007));
+    }
+}
