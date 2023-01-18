@@ -1,0 +1,16 @@
+class Solution {
+    public int[][] flipAndInvertImage(int[][] image) {
+        int[][] result = new int[image.length][image.length]; //new array for the result
+        for(int i = 0; i<image.length; i++){
+            for(int j = 0; j<image.length; j++){
+                result[i][j] = image[i][image.length - 1 - j]; //flipping horizontally
+                if(result[i][j] == 0){ // inverting the matrix
+                    result[i][j] = 1;
+                }else if(result[i][j] == 1){
+                    result[i][j] = 0;
+                }
+            }
+        }
+        return result;
+    }
+}
